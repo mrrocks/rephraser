@@ -28,7 +28,7 @@ function formatVariations(variationsData) {
     .split("|||")
     .map((variation) => variation.trim());
   const variationsHTML = variationsArray
-    .map((variation) => `<div>${variation}</div>`)
+    .map((variation) => `<div>${variation.replace(/\n/g, "<br>")}</div>`)
     .join("");
   return variationsHTML;
 }

@@ -21,16 +21,24 @@ async function rephrase(req, res) {
         messages: [
           {
             role: "user",
-            content: `Rephrase the following text considering these guidelines: 
-            1. Apply a ${tone} tone. 
-            2. Use a ${format} format. 
-            ${maintainOriginalLength ? "3. Maintain the original length." : ""}
-            4. Ensure ${readability} readability. 
-            
-            Provide ${variations} variations, separating them with "|||". 
-            Do not title or number the variations. 
-            
-            Text to rephrase: ${text}`,
+            content: `
+              Rephrase the following text considering these instructions:\n\n
+              - Apply a ${tone} tone.\n
+              - Use a ${format} format.\n
+              - ${
+                maintainOriginalLength ? "Maintain the original length." : ""
+              }\n
+              - Ensure ${readability} readability.\n
+              - Provide ${variations} variations.\n
+              - IMPORTANT: Use "|||" as a separator between variations.\n
+              - DONT title the variations or add any headers. 
+              - DONT numberize the variations, no lists bullets or numbers.\n
+              \n \n
+              Please strictly follow the formatting instructions for each variation.\n\n
+              Example:\n
+              Rephrased text ||| Rephrased text ||| Rephrased text \n
+              \n \n
+              Text to rephrase: ${text}`,
           },
         ],
         temperature: 0.7,
