@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rephraser</title>
+
+  <link rel="stylesheet" href="styles/styles.css">
+</head>
+
+<body>
+  <div class="app">
+    <form class="sidebar" id="rephrase-form">
+      <h1>Rephraser</h1>
+      <div>
+        <label for="input-text">Text to rephrase:</label>
+        <textarea id="input-text" rows="5" cols="50"></textarea>
+      </div>
+      <div>
+        <label for="tone-select">Tone:</label>
+        <select id="tone-select">
+          <option value="neutral">Neutral</option>
+          <option value="friendly">Friendly</option>
+          <option value="formal">Formal</option>
+          <option selected value="casual">Casual</option>
+          <option value="professional">Professional</option>
+          <option value="assertive">Assertive</option>
+          <option value="humorous">Humorous</option>
+          <option value="sincere">Sincere</option>
+          <option value="sympathetic">Sympathetic</option>
+          <option value="encouraging">Encouraging</option>
+          <option value="optimistic">Optimistic</option>
+        </select>
+      </div>
+      <div>
+        <label for="format-select">Format:</label>
+        <select id="format-select">
+          <option selected value="chat-message">Chat</option>
+          <option value="email">Email</option>
+          <option value="tweet">Tweet</option>
+          <option value="comment">Comment</option>
+          <option value="article">Article</option>
+          <option value="slogan">Slogan</option>
+        </select>
+      </div>
+      <div>
+        <label for="readability-select">Readability:</label>
+        <select id="readability-select">
+          <option selected value="easy">Easy</option>
+          <option value="medium">Medium</option>
+          <option value="difficult">Difficult</option>
+        </select>
+      </div>
+      <div>
+        <label for="variations-select">Variations:</label>
+        <div id="variations-segmented-control" class="segmented-control">
+          <button class="segment" data-value="1">1</button>
+          <button class="segment selected" data-value="3">3</button>
+          <button class="segment" data-value="6">6</button>
+          <button class="segment" data-value="9">9</button>
+        </div>
+      </div>
+      <div>
+        <input type="checkbox" id="maintain-length" name="maintain-length">
+        <label for="maintain-length">Maintain overall length</label>
+      </div>
+      <button type="submit">Rephrase</button>
+      <div id="spinner" style="display: none;">Loading...</div>
+    </form>
+    <div class="result" id="rephrased-text">
+      <!-- The rephrased text will be displayed here -->
+    </div>
+  </div>
+  <script type="module" src="scripts/app.js"></script>
+</body>
+
+</html>
