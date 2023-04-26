@@ -5,7 +5,6 @@
   "scripts": {
     "client": "parcel src/index.html",
     "build": "NODE_ENV=production parcel build src/index.html",
-    "vercel-build": "npm run build",
     "start": "node server.js",
     "dev": "run-p --race client nodemon-server",
     "nodemon-server": "nodemon server.js",

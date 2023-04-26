@@ -24,11 +24,7 @@ async function rephrase(req, res) {
             content: `Rephrase the following text considering these guidelines: 
             1. Apply a ${tone} tone. 
             2. Use a ${format} format. 
-            3. ${
-              maintainOriginalLength
-                ? "Maintain the original length."
-                : "No length constraints."
-            } 
+            ${maintainOriginalLength ? "3. Maintain the original length." : ""}
             4. Ensure ${readability} readability. 
             
             Provide ${variations} variations, separating them with "|||". 

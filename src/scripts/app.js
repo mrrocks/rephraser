@@ -20,32 +20,27 @@ const segments = segmentedControl.getElementsByClassName("segment");
 toggleSpinner(spinner, false);
 initSegmentedControl(segmentedControl, segments);
 
+form.addEventListener("submit", handleSubmit);
+
 async function handleSubmit(event) {
   event.preventDefault();
-
   const text = inputText.value;
-  const tone = toneSelect.value;
-  const format = formatSelect.value;
-  const maintainOriginalLength = maintainLengthCheck.checked;
-  const variations = parseInt(
-    document.querySelector(".segment.selected").getAttribute("data-value")
-  );
-  const readability = readabilitySelect.value;
+
   if (text) {
+    const requestOptions = {
+      tone: toneSelect.value,
+      format: formatSelect.value,
+      maintainOriginalLength: maintainLengthCheck.checked,
+      variations: parseInt(
+        document.querySelector(".segment.selected").dataset.value
+      ),
+      readability: readabilitySelect.value,
+    };
+
     toggleSpinner(spinner, true);
-    const result = await rephraseText(
-      text,
-      tone,
-      format,
-      maintainOriginalLength,
-      variations,
-      readability
-    );
+    rephrasedText.innerHTML = await rephraseText(text, requestOptions);
     toggleSpinner(spinner, false);
-    rephrasedText.innerHTML = result;
   } else {
     rephrasedText.innerText = "Please enter some text to rephrase.";
   }
 }
-
-form.addEventListener("submit", handleSubmit);

@@ -3,14 +3,7 @@ const backendUrl =
     ? process.env.PROD_API_URL
     : process.env.DEV_API_URL;
 
-export async function rephraseText(
-  text,
-  tone,
-  format,
-  maintainOriginalLength,
-  variations,
-  readability
-) {
+export async function rephraseText(text, requestOptions) {
   const response = await fetch(backendUrl, {
     method: "POST",
     headers: {
@@ -18,11 +11,7 @@ export async function rephraseText(
     },
     body: JSON.stringify({
       text,
-      tone,
-      format,
-      maintainOriginalLength,
-      variations,
-      readability,
+      ...requestOptions,
     }),
   });
 
