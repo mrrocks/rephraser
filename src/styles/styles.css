@@ -37,6 +37,22 @@ body {
   padding-bottom: 1em;
 }
 
+.editable {
+  resize: vertical;
+  overflow: auto;
+  min-height: 100px;
+  white-space: pre-wrap;
+  width: 100%;
+  font-size: 1rem;
+  padding: 0.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.marked {
+  background-color: #ffff00; /* Yellow */
+}
+
 h1 {
   font-size: 2rem;
   font-weight: 700;
@@ -48,6 +64,12 @@ label {
   display: inline-block;
   font-weight: 500;
   margin-bottom: 0.5rem;
+}
+
+.help {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
 }
 
 textarea,

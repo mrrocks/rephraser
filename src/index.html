@@ -14,8 +14,10 @@
     <form class="sidebar" id="rephrase-form">
       <h1>Rephraser</h1>
       <div>
-        <label for="input-text">Text to rephrase:</label>
-        <textarea id="input-text" rows="5" cols="50"></textarea>
+        <label for="textBox">Text to rephrase:
+          <span class="help">Preserve any words by double-clicking them.</span>
+        </label>
+        <div id="textBox" class="editable" contentEditable="true"></div>
       </div>
       <div>
         <label for="tone-select">Tone:</label>
@@ -40,6 +42,7 @@
           <option value="email">Email</option>
           <option value="tweet">Tweet</option>
           <option value="comment">Comment</option>
+          <option value="copy">Copy</option>
           <option value="article">Article</option>
           <option value="slogan">Slogan</option>
         </select>

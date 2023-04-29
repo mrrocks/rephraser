@@ -1,11 +1,12 @@
 import { initAnalytics } from "./modules/analytics";
 import { toggleSpinner, initSegmentedControl } from "./modules/ui";
 import { rephraseText } from "./modules/rephrase";
+import { textBox, initTextBox, extractMarkedWords } from "./modules/ui/TextBox";
 
 initAnalytics();
+initTextBox();
 
 const form = document.getElementById("rephrase-form");
-const inputText = document.getElementById("input-text");
 const toneSelect = document.getElementById("tone-select");
 const formatSelect = document.getElementById("format-select");
 const maintainLengthCheck = document.getElementById("maintain-length");
@@ -24,7 +25,8 @@ form.addEventListener("submit", handleSubmit);
 
 async function handleSubmit(event) {
   event.preventDefault();
-  const text = inputText.value;
+  const text = textBox.innerText;
+  const markedWords = extractMarkedWords();
 
   if (text) {
     const requestOptions = {
@@ -35,8 +37,9 @@ async function handleSubmit(event) {
         document.querySelector(".segment.selected").dataset.value
       ),
       readability: readabilitySelect.value,
+      markedWords: markedWords,
     };
-
+    console.log(markedWords);
     toggleSpinner(spinner, true);
     rephrasedText.innerHTML = await rephraseText(text, requestOptions);
     toggleSpinner(spinner, false);

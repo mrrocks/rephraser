@@ -12,6 +12,7 @@ async function rephrase(req, res) {
       maintainOriginalLength,
       variations,
       readability,
+      markedWords,
     } = req.body;
 
     const response = await axios.post(
@@ -22,26 +23,43 @@ async function rephrase(req, res) {
           {
             role: "user",
             content: `
-              Rephrase the following text considering these instructions:\n\n
+              You are an expert writter. Rephrase the following text considering these instructions:
+              \n\n
+
               - Apply a ${tone} tone.\n
-              - Use a ${format} format.\n
-              - ${
-                maintainOriginalLength ? "Maintain the original length." : ""
-              }\n
+              - Use ${format} format.\n
+              ${
+                maintainOriginalLength
+                  ? "- Maintain the original length.\n"
+                  : ""
+              }
               - Ensure ${readability} readability.\n
               - Provide ${variations} variations.\n
-              - IMPORTANT: Use "|||" as a separator between variations.\n
-              - DONT title the variations or add any headers. 
-              - DONT numberize the variations, no lists bullets or numbers.\n
-              \n \n
-              Please strictly follow the formatting instructions for each variation.\n\n
-              Example:\n
-              Rephrased text ||| Rephrased text ||| Rephrased text \n
-              \n \n
+              - IMPORTANT: Use "---" as a separator between variations.\n
+              - DONT title the variations or add any headers.\n
+              - DONT number the variations: no lists, bullets, or numbers.\n
+              - Detect text's original languange and use it for the variations.\n\n
+              
+              Strictly follow the formatting instructions for each variation.\n\n
+              
+              Example:\n\n
+              
+              Rephrased text\n
+              ---\n
+              Rephrased text\n
+              ---\n
+              Rephrased text
+              \n\n
+              
+              ${
+                markedWords
+                  ? `Include these words in all the variations: ${markedWords} \n`
+                  : ""
+              }
               Text to rephrase: ${text}`,
           },
         ],
-        temperature: 0.7,
+        temperature: 0.2,
         max_tokens: 2048,
       },
       {
@@ -53,7 +71,13 @@ async function rephrase(req, res) {
     );
     res.json(response.data.choices[0].message.content.trim());
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    if (error.response) {
+      res
+        .status(error.response.status)
+        .json({ error: error.response.data.error.message });
+    } else {
+      res.status(500).json({ error: error.message });
+    }
   }
 }
 

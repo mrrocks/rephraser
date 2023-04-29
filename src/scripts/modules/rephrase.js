@@ -25,7 +25,7 @@ export async function rephraseText(text, requestOptions) {
 
 function formatVariations(variationsData) {
   const variationsArray = variationsData
-    .split("|||")
+    .split("---")
     .map((variation) => variation.trim());
   const variationsHTML = variationsArray
     .map((variation) => `<div>${variation.replace(/\n/g, "<br>")}</div>`)
