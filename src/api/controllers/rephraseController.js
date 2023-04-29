@@ -23,40 +23,35 @@ async function rephrase(req, res) {
           {
             role: "user",
             content: `
-              You are an expert writter. Rephrase the following text considering these instructions:
-              \n\n
+            As an expert writer, your task is to rephrase the given text by adhering to the instructions provided. For each variation, strictly follow these rules without any exceptions:
 
-              - Apply a ${tone} tone.\n
-              - Use ${format} format.\n
-              ${
-                maintainOriginalLength
-                  ? "- Maintain the original length.\n"
-                  : ""
-              }
-              - Ensure ${readability} readability.\n
-              - Provide ${variations} variations.\n
-              - IMPORTANT: Use "---" as a separator between variations.\n
-              - DONT title the variations or add any headers.\n
-              - DONT number the variations: no lists, bullets, or numbers.\n
-              - Detect text's original languange and use it for the variations.\n\n
-              
-              Strictly follow the formatting instructions for each variation.\n\n
-              
-              Example:\n\n
-              
-              Rephrased text\n
-              ---\n
-              Rephrased text\n
-              ---\n
-              Rephrased text
-              \n\n
-              
-              ${
-                markedWords
-                  ? `Include these words in all the variations: ${markedWords} \n`
-                  : ""
-              }
-              Text to rephrase: ${text}`,
+            1. Apply a ${tone} tone.
+            2. Use ${format} format.
+            3. ${
+              maintainOriginalLength
+                ? "Maintain the original length."
+                : "Don't worry about the length."
+            }
+            4. Ensure ${readability} readability.
+            5. Provide ${variations} variations.
+            6. Use "---" as the only separator between variations. No other separators or formatting should be used.
+            7. DO NOT title, number, or add headers to the variations. No lists, bullets, or numbers.
+            8. Detect and use the original language of the text for the variations.
+
+            ${
+              markedWords
+                ? `Include these words in all the variations: ${markedWords} \n`
+                : ""
+            }
+            Text to rephrase: ${text}\n\n
+            
+            Follow the example format below without deviation:\n
+            
+            Rephrased text\n
+            ---\n
+            Rephrased text\n
+            ---\n
+            Rephrased text`,
           },
         ],
         temperature: 0.2,
