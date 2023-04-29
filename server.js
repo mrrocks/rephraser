@@ -1,4 +1,3 @@
-// const cors = require("cors");
 const app = require("./src/api/index");
 
 const port = process.env.PORT || 3000;

@@ -12,7 +12,7 @@ async function rephrase(req, res) {
       maintainOriginalLength,
       variations,
       readability,
-      markedWords,
+      highlightedWords,
     } = req.body;
 
     const response = await axios.post(
@@ -39,8 +39,8 @@ async function rephrase(req, res) {
             8. Detect and use the original language of the text for the variations.
 
             ${
-              markedWords
-                ? `Include these words in all the variations: ${markedWords} \n`
+              highlightedWords
+                ? `Include these words in all the variations: ${highlightedWords} \n`
                 : ""
             }
             Text to rephrase: ${text}\n\n

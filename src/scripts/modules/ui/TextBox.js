@@ -1,30 +1,38 @@
 const textBox = document.getElementById("textBox");
-textBox.addEventListener("paste", handlePaste);
+textBox.addEventListener("paste", removeTextFormating);
 
 function initTextBox() {
-  textBox.addEventListener("mousedown", preventTextSelectionOnMultiClick);
-  textBox.addEventListener("dblclick", selectAndHighlightWord);
+  textBox.addEventListener("mousedown", preventSelection);
+  textBox.addEventListener("dblclick", highlightWord);
 }
 
-function preventTextSelectionOnMultiClick(event) {
+function getCaretPosition(x, y) {
+  return document.caretPositionFromPoint
+    ? document.caretPositionFromPoint(x, y)
+    : document.caretRangeFromPoint(x, y);
+}
+
+function preventSelection(event) {
   if (event.detail > 1) {
     event.preventDefault();
     textBox.style.userSelect = "none";
   }
 }
 
-function selectAndHighlightWord(event) {
+function highlightWord(event) {
   textBox.style.userSelect = "auto";
-  const word = getWordAtCoordinates(event.target, event.clientX, event.clientY);
-  word && toggleWordHighlight(word);
+  const word = findWordAtCoordinates(
+    event.target,
+    event.clientX,
+    event.clientY
+  );
+  word && toggleHighlight(word);
 
-  setCaretPosition(event.clientX, event.clientY);
+  updateCaretPosition(event.clientX, event.clientY);
 }
 
-function setCaretPosition(x, y) {
-  const caretPos = document.caretPositionFromPoint
-    ? document.caretPositionFromPoint(x, y)
-    : document.caretRangeFromPoint(x, y);
+function updateCaretPosition(x, y) {
+  const caretPos = getCaretPosition(x, y);
 
   if (!caretPos) return;
 
@@ -32,45 +40,42 @@ function setCaretPosition(x, y) {
   const offset = caretPos.offset || caretPos.startOffset;
   const range = document.createRange();
   const selection = window.getSelection();
+
   range.setStart(textNode, offset);
   range.collapse(true);
   selection.removeAllRanges();
   selection.addRange(range);
 }
 
-function toggleWordHighlight(word) {
-  isWordHighlighted(word.node)
-    ? unhighlightWord(word.node)
-    : highlightWord(word);
+function toggleHighlight(word) {
+  isHighlighted(word.node) ? removeHighlight(word.node) : applyHighlight(word);
 }
 
-function createHighlightedWord() {
+function createHighlightedSpan() {
   const span = document.createElement("span");
   span.className = "marked";
   return span;
 }
 
-function isWordHighlighted(node) {
+function isHighlighted(node) {
   return node.parentElement.classList.contains("marked");
 }
 
-function unhighlightWord(node) {
+function removeHighlight(node) {
   const textNode = document.createTextNode(node.parentElement.textContent);
   node.parentElement.replaceWith(textNode);
 }
 
-function highlightWord(word) {
+function applyHighlight(word) {
   const range = document.createRange();
-  const highlightedWord = createHighlightedWord();
+  const highlightedWord = createHighlightedSpan();
   range.setStart(word.node, word.startOffset);
   range.setEnd(word.node, word.endOffset);
   range.surroundContents(highlightedWord);
 }
 
-function getWordAtCoordinates(element, x, y) {
-  const caretPos = document.caretPositionFromPoint
-    ? document.caretPositionFromPoint(x, y)
-    : document.caretRangeFromPoint(x, y);
+function findWordAtCoordinates(element, x, y) {
+  const caretPos = getCaretPosition(x, y);
 
   if (!caretPos) return null;
 
@@ -78,17 +83,17 @@ function getWordAtCoordinates(element, x, y) {
   const offset = caretPos.offset || caretPos.startOffset;
   const text = textNode.textContent;
   const startOffset = text.lastIndexOf(" ", offset) + 1;
-  const endOffset = findEndOffset(text, offset);
+  const endOffset = findWordEndOffset(text, offset);
 
   return { node: textNode, startOffset, endOffset };
 }
 
-function findEndOffset(text, offset) {
+function findWordEndOffset(text, offset) {
   const endOffset = text.indexOf(" ", offset);
   return endOffset === -1 ? text.length : endOffset;
 }
 
-function extractMarkedWords() {
+function getHighlightedWords() {
   const markedElements = textBox.querySelectorAll(".marked");
   const markedWordsArray = Array.from(markedElements, (el) =>
     el.innerText.replace(/[^\w\s]/gi, "").trim()
@@ -100,7 +105,7 @@ function extractMarkedWords() {
     .join(", ");
 }
 
-function handlePaste(e) {
+function removeTextFormating(e) {
   e.preventDefault();
   const plainText = e.clipboardData.getData("text/plain");
   const selection = window.getSelection();
@@ -113,4 +118,4 @@ function handlePaste(e) {
   selection.addRange(range);
 }
 
-export { textBox, initTextBox, extractMarkedWords };
+export { textBox, initTextBox, getHighlightedWords };
