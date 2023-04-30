@@ -2,6 +2,7 @@ const axios = require("axios");
 
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const url = "https://api.openai.com/v1/chat/completions";
+const maxTokens = parseInt(process.env.PUBLIC_MAX_TOKENS);
 
 async function rephrase(req, res) {
   try {
@@ -55,7 +56,7 @@ async function rephrase(req, res) {
           },
         ],
         temperature: 0.2,
-        max_tokens: 2048,
+        max_tokens: maxTokens,
       },
       {
         headers: {
@@ -65,6 +66,7 @@ async function rephrase(req, res) {
       }
     );
     res.json(response.data.choices[0].message.content.trim());
+    console.log(maxTokens);
   } catch (error) {
     if (error.response) {
       res

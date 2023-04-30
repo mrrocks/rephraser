@@ -1,4 +1,4 @@
-// app.js
+console.log("Max tokens:", process.env.PUBLIC_MAX_TOKENS);
 
 import { initAnalytics } from "./modules/analytics";
 import { toggleSpinner } from "./modules/ui";
