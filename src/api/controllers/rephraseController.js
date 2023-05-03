@@ -12,7 +12,7 @@ async function rephrase(req, res) {
       format,
       maintainOriginalLength,
       variations,
-      readability,
+      purpose,
       highlightedWords,
     } = req.body;
 
@@ -28,12 +28,12 @@ async function rephrase(req, res) {
 
             1. Apply a ${tone} tone.
             2. Use ${format} format.
-            3. ${
+            3. Purpose is to ${purpose}.
+            4. ${
               maintainOriginalLength
-                ? "Maintain the original length."
-                : "Don't worry about the length."
+                ? "Keep the text's original length intact."
+                : "No need to worry about the original text's length."
             }
-            4. Ensure ${readability} readability.
             5. Provide ${variations} variations.
             6. Use "---" as the only separator between variations. No other separators or formatting should be used.
             7. DO NOT title, number, or add headers to the variations. No lists, bullets, or numbers.

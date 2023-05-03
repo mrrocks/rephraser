@@ -15,24 +15,21 @@
       <h1>Rephraser</h1>
       <div>
         <label for="textBox">Text to rephrase:
-          <span class="help">Preserve any words by double-clicking them.</span>
+          <span class="help">Double-click any word to preserve it.</span>
         </label>
         <div id="textBox" class="editable" contentEditable="true"></div>
       </div>
       <div>
         <label for="tone-select">Tone:</label>
         <select id="tone-select">
-          <option value="neutral">Neutral</option>
+          <option selected value="neutral">Neutral</option>
+          <option value="casual">Casual</option>
           <option value="friendly">Friendly</option>
           <option value="formal">Formal</option>
-          <option selected value="casual">Casual</option>
-          <option value="professional">Professional</option>
-          <option value="assertive">Assertive</option>
-          <option value="humorous">Humorous</option>
-          <option value="sincere">Sincere</option>
-          <option value="sympathetic">Sympathetic</option>
-          <option value="encouraging">Encouraging</option>
-          <option value="optimistic">Optimistic</option>
+          <option value="confident">Confident</option>
+          <option value="playful">Playful</option>
+          <option value="emotional">Emotional</option>
+          <option value="direct">Direct</option>
         </select>
       </div>
       <div>
@@ -42,17 +39,21 @@
           <option value="email">Email</option>
           <option value="tweet">Tweet</option>
           <option value="comment">Comment</option>
-          <option value="copy">Copy</option>
+          <option value="ux copy">UX Copy</option>
           <option value="article">Article</option>
-          <option value="slogan">Slogan</option>
+          <option value="tagline">Tagline</option>
         </select>
       </div>
       <div>
-        <label for="readability-select">Readability:</label>
-        <select id="readability-select">
-          <option selected value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="difficult">Difficult</option>
+        <label for="purpose-select">Purpose:</label>
+        <select id="purpose-select">
+          <option selected value="converse">Converse</option>
+          <option value="inform">Inform</option>
+          <option value="persuade">Persuade</option>
+          <option value="entertain">Entertain</option>
+          <option value="educate">Educate</option>
+          <option value="inspire">Inspire</option>
+          <option value="report">Report</option>
         </select>
       </div>
       <div>

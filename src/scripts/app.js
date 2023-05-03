@@ -19,7 +19,7 @@ const formatSelect = document.getElementById("format-select");
 const maintainLengthCheck = document.getElementById("maintain-length");
 const rephrasedText = document.getElementById("rephrased-text");
 const spinner = document.getElementById("spinner");
-const readabilitySelect = document.getElementById("readability-select");
+const purposeSelect = document.getElementById("purpose-select");
 
 toggleSpinner(spinner, false);
 
@@ -40,7 +40,7 @@ async function handleSubmit(event) {
       variations: parseInt(
         document.querySelector(".segment.selected").dataset.value
       ),
-      readability: readabilitySelect.value,
+      purpose: purposeSelect.value,
       highlightedWords: highlightedWords,
     };
 
